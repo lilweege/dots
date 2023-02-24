@@ -106,7 +106,9 @@ key[Control-Right]="${terminfo[kRIT5]}"
 [[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
 
 bindkey '^H' backward-kill-word      # ctrl+backspace
-bindkey '5~' kill-word               # ctrl+delete
+bindkey -M emacs '^[[3;5~' kill-word # ctrl+delete
+bindkey -M viins '^[[3;5~' kill-word
+bindkey -M vicmd '^[[3;5~' kill-word
 # bindkey '^[[3^' kill-word            # ctrl+delete
 # bindkey '^[[1;5D' backward-word      # ctrl+left
 # bindkey '^[[1;5C' forward-word       # ctrl+right
