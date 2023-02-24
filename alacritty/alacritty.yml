@@ -1,0 +1,67 @@
+window:
+  padding:
+    x: 10
+    y: 10
+
+font:
+  normal:
+    family: Iosevka Extended
+    style: normal
+
+  bold:
+    family: Iosevka Extended
+    style: bold
+
+  italic:
+    family: Iosevka Extended
+    style: italic
+
+  bold_italic:
+    familty: Iosevka Extended
+    style: italic bold
+
+  size: 12
+
+  offset:
+    x: 0
+    y: 0
+
+colors:
+  primary:
+    background: '#1d1f21'
+    foreground: '#c5c8c6'
+    dim_foreground: '#000000'
+  cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  vi_mode_cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  selection:
+    text: CellForeground
+    background: '#4c566a'
+  search:
+    matches:
+      foreground: CellBackground
+      background: '#88c0d0'
+    bar:
+      background: '#434c5e'
+      foreground: '#d8dee9'
+  normal:
+    black: '#282a2e'
+    red: '#db7464'
+    green: '#a7e160'
+    yellow: '#d1a37b'
+    blue: '#69b2d6'
+    magenta: '#a073d6'
+    cyan: '#69e1d3'
+    white: '#cccccc'
+  dim:
+    black: '#373b4a'
+    red: '#dba08f'
+    green: '#bde18b'
+    yellow: '#debda1'
+    blue: '#95a9d6'
+    magenta: '#b59fd6'
+    cyan: '#95e1d2'
+    white: '#dddddd'
