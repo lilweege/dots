@@ -31,6 +31,31 @@ require('packer').startup(function(use)
 
     use 'dstein64/vim-startuptime'
 
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+        config = function()
+            vim.cmd([[
+            let g:mkdp_preview_options = {
+                \ 'mkit': {},
+                \ 'katex': {},
+                \ 'uml': {},
+                \ 'maid': {},
+                \ 'disable_sync_scroll': 0,
+                \ 'sync_scroll_type': 'middle',
+                \ 'hide_yaml_meta': 1,
+                \ 'sequence_diagrams': {},
+                \ 'flowchart_diagrams': {},
+                \ 'content_editable': v:false,
+                \ 'disable_filename': 0,
+                \ 'toc': {}
+                \ }
+                let g:mkdp_page_title = '${name}'
+                let g:mkdp_theme = 'light'
+            ]])
+            vim.g.mkdp_markdown_css = vim.fn.stdpath "config" .. '/extras/md.css'
+        end
+    })
     use { 'lervag/vimtex', config = function()
         vim.cmd([[
             " This is necessary for VimTeX to load properly. The "indent" is optional.
@@ -65,11 +90,11 @@ require('packer').startup(function(use)
             endif
             set t_Co=256
             set t_ut=
-    
+
             function! MyHighlights() abort
                 hi Visual guibg=#3b3c35
             endfunction
-            
+
             augroup MyColors
                 autocmd!
                 autocmd ColorScheme codedark call MyHighlights()
@@ -83,7 +108,7 @@ require('packer').startup(function(use)
             autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
             autocmd InsertLeave * match ExtraWhitespace /\s\+$/
             autocmd BufWinLeave * call clearmatches()
-    
+
         ]])
     end }
     use { 'RRethy/vim-illuminate', config = function()
@@ -91,7 +116,7 @@ require('packer').startup(function(use)
             hi def IlluminatedWordText cterm=bold gui=bold guibg=#272822
             hi def IlluminatedWordRead cterm=bold gui=bold guibg=#272822
             hi def IlluminatedWordWrite cterm=bold gui=bold guibg=#272822
-    
+
             augroup illuminate_augroup
                 autocmd!
                 autocmd VimEnter * hi IlluminatedWordText cterm=bold gui=bold guibg=#272822
@@ -114,7 +139,7 @@ require('packer').startup(function(use)
                 \   'readonly': 'LightlineReadonly',
                 \ },
             \ }
-    
+
             function! GitStatus()
                 let branch = FugitiveHead()
                 if branch == ''
@@ -178,26 +203,26 @@ require('packer').startup(function(use)
             },
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
-            
+
                 local function map(mode, l, r, opts)
                     opts = opts or {}
                     opts.buffer = bufnr
                     vim.keymap.set(mode, l, r, opts)
                 end
-            
+
                 -- Navigation
                 map('n', ']c', function()
                     if vim.wo.diff then return ']c' end
                     vim.schedule(function() gs.next_hunk() end)
                     return '<Ignore>'
                 end, {expr=true})
-            
+
                 map('n', '[c', function()
                     if vim.wo.diff then return '[c' end
                     vim.schedule(function() gs.prev_hunk() end)
                     return '<Ignore>'
                 end, {expr=true})
-            
+
                 -- -- Actions
                 -- map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
                 -- map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
@@ -210,7 +235,7 @@ require('packer').startup(function(use)
                 -- map('n', '<leader>hd', gs.diffthis)
                 -- map('n', '<leader>hD', function() gs.diffthis('~') end)
                 -- map('n', '<leader>td', gs.toggle_deleted)
-            
+
                 -- -- Text object
                 -- map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
             end
@@ -263,11 +288,11 @@ require('packer').startup(function(use)
             renderer = {
                 highlight_git = false,
                 highlight_opened_files = "none",
-            
+
                 indent_markers = {
                     enable = false,
                 },
-            
+
                 icons = {
                     show = {
                         file = true,
@@ -275,7 +300,7 @@ require('packer').startup(function(use)
                         folder_arrow = true,
                         git = false,
                     },
-            
+
                     glyphs = {
                         default = "",
                         symlink = "",
@@ -301,7 +326,7 @@ require('packer').startup(function(use)
                     },
                 },
             },
-            
+
         vim.keymap.set("n", "<C-n>", "<cmd> NvimTreeToggle <CR>");
         vim.keymap.set("n", "<leader>e", "<cmd> NvimTreeFocus <CR>");
         }
@@ -359,20 +384,20 @@ require('packer').startup(function(use)
                 name = "recommended",
                 manage_nvim_cmp = false,
             })
-            
+
             -- local cmp = require('cmp')
             -- local cmp_settings = { behavior = cmp.SelectBehavior.Select }
             -- local cmp_mappings = lsp.defaults.cmp_mappings({
             --     ['<C-space>'] = cmp.mapping.complete(),
             --     ['<CR>'] = cmp.mapping.confirm({ select = true }),
             -- })
-            
+
             lsp.set_preferences({ sign_icons = {} })
             -- lsp.setup_nvim_cmp({ mapping = cmp_mappings })
-            
+
             lsp.on_attach(function(client, bufnr)
                 local bufopts = { buffer = bufnr, remap = false }
-            
+
                 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
                 -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -383,7 +408,7 @@ require('packer').startup(function(use)
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
                 -- vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
             end)
-            
+
             lsp.setup()
 
             vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
@@ -392,9 +417,9 @@ require('packer').startup(function(use)
                 window = {
                     completion = cmp.config.window.bordered()
                 }
-            })    
+            })
             cmp.setup(cmp_config)
-            
+
             vim.diagnostic.config({
                 virtual_text = true,
                 update_in_insert = false,
