@@ -67,9 +67,13 @@ require('packer').startup(function(use)
             " info).
             syntax enable
 
-            let g:vimtex_view_general_viewer = 'SumatraPDF'
-            let g:vimtex_view_general_options
-                \ = '-reuse-instance -forward-search @tex @line @pdf'
+            if has('win32')
+                let g:vimtex_view_general_viewer = 'SumatraPDF'
+                let g:vimtex_view_general_options
+                    \ = '-reuse-instance -forward-search @tex @line @pdf'
+            else
+                let g:vimtex_view_method = 'mupdf'
+            endif
 
              let g:vimtex_compiler_latexmk = {
                  \ 'options': [
