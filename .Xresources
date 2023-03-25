@@ -1,0 +1,39 @@
+Xcursor.size: 32
+Xft.dpi: 120
+font: Iosevka Extended:pixelsize=16
+
+! special
+*.foreground:   #c5c8c6
+*.background:   #1d1f21
+
+! black
+*.color0:       #282a2e
+*.color8:       #373b4a
+
+! red
+*.color1:       #db7464
+*.color9:       #dba08f
+
+! green
+*.color2:       #a7e160
+*.color10:      #bde18b
+
+! yellow
+*.color3:       #d1a37b
+*.color11:      #debda1
+
+! blue
+*.color4:       #69b2d6
+*.color12:      #95a9d6
+
+! magenta
+*.color5:       #a073d6
+*.color13:      #b59fd6
+
+! cyan
+*.color6:       #69e1d3
+*.color14:      #95e1d2
+
+! white
+*.color7:       #cccccc
+*.color15:      #dddddd

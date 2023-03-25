@@ -1,0 +1,60 @@
+#! /bin/sh
+
+# NOTE: screen is fixed within xinit script before this
+picom &
+
+# night light
+killall gammastep
+for pid in `ps aux | grep gammastep | awk {"print $2"}`; do kill -9 $pid; done;
+gammastep -x
+gammastep-indicator & # TODO: sxhkd keybinds for brightness and toggle 
+
+
+# xstuff
+xset r rate 200 50 # keyboard repeat rate
+xinput --set-prop "pointer:Logitech MX Master 3" "libinput Accel Profile Enabled" 0, 1 # disable mouse acceleration
+xsetroot -cursor_name left_ptr # change x cursor
+xrdb -merge ~/.config/.Xresources
+
+feh --bg-fill ~/Documents/Pictures/wallpapers/bg1.jpg
+~/.config/polybar/launch.sh
+
+export CM_MAX_CLIPS=5
+export CM_SELECTIONS="clipboard"
+clipmenud &
+
+dunst &
+numlockx on &
+blueman-applet &
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+# bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor DP-0 -d 1 2 3 4 5
+bspc monitor DP-1-1 -d 6 7 8 9 0 
+
+
+bspc config border_width            1
+bspc config window_gap              3
+bspc config bottom_monocle_padding  3
+
+bspc config split_ratio          0.6
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# keep up with 100hz refresh rate
+# the default is 17 (1000ms/60Hz)
+# 10 should theoretically be sufficient as low as 8 seems to be better
+bspc config pointer_motion_interval 6
+
+bspc rule -a Gimp state=floating follow=on
+bspc rule -a Pcmanfm state=floating
+#bspc rule -a Xarchiver state=floating
+bspc rule -a Thunar state=floating
+bspc rule -a lxqt-archiver state=floating
+# spotify doesn't work cause shit program
+bspc rule -a discord desktop=9
+#bspc rule -a Spotify state=tiling manage=on layer=normal desktop=0x00200018 follow=off
+bspc rule -a Blueman-manager state=floating
+bspc rule -a Pavucontrol state=floating
+bspc rule -a Brave-browser state=floating
+bspc rule -a mpv state=floating
