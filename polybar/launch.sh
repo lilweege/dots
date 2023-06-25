@@ -14,3 +14,5 @@
 
 # while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
+polybar --reload bar1 &
+polybar --reload bar2 &
