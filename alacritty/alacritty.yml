@@ -56,7 +56,7 @@ colors:
     magenta: '#a073d6'
     cyan: '#69e1d3'
     white: '#cccccc'
-  dim:
+  bright:
     black: '#373b4a'
     red: '#dba08f'
     green: '#bde18b'
